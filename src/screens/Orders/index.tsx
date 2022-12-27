@@ -143,19 +143,6 @@ const Orders = () => {
       >
         <View style={styles.blur} />
         <View style={styles.modal}>
-          <TouchableOpacity style={styles.iconView} onPress={onClose}>
-          <Image
-              style={{
-                alignSelf: 'center',
-                paddingBottom: 2,
-                height: 20,
-                width: 20,
-              }}
-              source={{
-                uri: SVGS.CloseIconSVG,
-              }}
-            />
-          </TouchableOpacity>
           <View style={styles.modalBody}>
             <View style={styles.inputView}>
               <TextInput
@@ -164,7 +151,23 @@ const Orders = () => {
                 value={searchinput}
                 onChangeText={e => setSearchInput(e)}
               />
-              <BsSearch color="#a1a3b4" height={30} width={30} style={styles.search} />
+              {searchinput === '' ? (
+                <BsSearch color="#a1a3b4" height={30} width={30} style={styles.search} />
+              ) : (
+                <TouchableOpacity style={styles.iconView} onPress={() => setSearchInput('')}>
+                  <Image
+                      style={{
+                        alignSelf: 'center',
+                        paddingBottom: 2,
+                        height: 20,
+                        width: 20,
+                      }}
+                      source={{
+                        uri: SVGS.CloseIconSVG,
+                      }}
+                    />
+                </TouchableOpacity>
+              )}      
             </View>
             <Text style={styles.text2}>Frequently Ordered SKUs</Text>
             <OrderTable data={data} columns={columns} setData={setData} />
@@ -243,17 +246,11 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   iconView: {
-    position: 'absolute',
-    top: 25,
-    right: 25,
-    backgroundColor: 'transperent',
     width: 32,
     height: 32,
     borderRadius: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 99,
-
   },
   iconStyles: {
     color: '#4a4c57',
@@ -275,7 +272,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     padding: 3,
     color: '#9295A5',
-    width: "95%",
+    width: "97%",
   },
   search: {
     // cursor: 'pointer',
