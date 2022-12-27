@@ -1,13 +1,13 @@
 import React from 'react';
 import { useTable } from 'react-table';
 import { Table } from 'react-bootstrap';
-import {CoustomerTemp} from './index'
+import {CustomerTemp} from '../types'
 import { StyleSheet,View } from 'react-native'
 import { Colors } from '../../colors';
 
 interface Props {
   columns: any[],
-  data: CoustomerTemp[],
+  data: CustomerTemp[],
   pading?: number,
 
 }
@@ -20,6 +20,9 @@ const ReactTable = (props: Props) => {
       columns,
       data,
     });
+
+  
+  
 
   // Render the UI for your table
   return (
@@ -40,7 +43,6 @@ const ReactTable = (props: Props) => {
               {column.render('Header')}
             </th>
           ))}
-          <View style={{ borderStyle: 'solid', borderWidth: 0.2, borderColor: '#292933', marginTop: 10 }} />
         </tr>
       ))}
     </thead>

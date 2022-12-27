@@ -1,15 +1,12 @@
 import {View, Text, StyleSheet, Pressable} from 'react-native'
-import {Colors} from '../../colors'
-import {useState} from 'react'
+import React, {useState} from 'react'
+import AsyncStorage from '@react-native-community/async-storage'
+import { HeaderTemp } from '../types'
 
-interface HeaderTemp {
-    id: string,
-    tabName: string,
-    selectedTab?: boolean,
-}
- 
 
 function createItems<Type>(items:Type[]):Type[]{ return [...items]}
+
+
 
 const tabs = createItems<HeaderTemp>([
     { 
@@ -39,10 +36,9 @@ const tabs = createItems<HeaderTemp>([
     },
 ])
 
-const Header = () => {
+const Header = ({ navigation }) => {
    const [tabList, setTabList] = useState(tabs)
    type Id = string
-
    const setTab = (id: Id) => {
     setTabList(tabList.map(item => {
       if (id === item.id) {
@@ -53,27 +49,79 @@ const Header = () => {
     }))
     }
 
+    const readData = async () => {
+      try {
+        const value: any = await AsyncStorage.getItem('tab');
+        if (value !== null) {
+          await setTab(value)
+        }
+      } catch (e) {
+        // saving error
+      }
+    };
+   
+    const storeData = async (id: any) => {
+      try {
+        await AsyncStorage.setItem('tab', id)
+      } catch (e) {
+
+        // saving error
+      }
+    }   
+   
+
+    React.useEffect(() => {
+      
+      readData()
+    }, [])
 
     return (
         <View style={styles.container}>
           <View style={styles.flatList}>
             {tabList.map(item => {
-              const color = item.selectedTab === true? '#e85b49' : '#909195'
-              const textDecoration = item.selectedTab === true? 'underline #e85b49 3px' : 'none'
+              const color = item.selectedTab === true? '#e85b49' : '#9295A5'
+              const backgroundColor = item.selectedTab? '#E85B49' : 'transperent' 
               return (
                 <Pressable
-                  onPress={() => setTab(item.id)}
+                  onPress={async () => {
+                    await setTab(item.id)
+                    await storeData(item.id)
+                    switch(item.tabName) {
+                      case 'Daybook':
+                        navigation.navigate('dayBook')
+                        break;
+                      case 'Received':
+                        navigation.navigate('receiving')
+                        break;
+                      case 'Payments':
+                        navigation.navigate('payments')
+                        break;
+                      case 'Settlements':
+                        navigation.navigate('settlements')
+                        break;
+                      case 'Customers':
+                        navigation.navigate('customers')
+                        break;
+                      default:
+                        return;
+                    }
+                  }}
                   key= {item.id}
                 >
                   <Text 
                     style={{
-                      color: color,
-                      textDecoration,
-                      cursor: 'pointer',
+                      color,
+                      paddingBottom: 5,
+                      fontSize: 14,
                     }}                     
                   >
-                      {item.tabName}
+                          {item.tabName}
                   </Text>
+                  <View style={{
+                    backgroundColor,
+                    height: 2,
+                    width: '100%',
+                  }} />
                 </Pressable>
               )  
             })}
@@ -84,7 +132,7 @@ const Header = () => {
 
 const styles = StyleSheet.create({
     container: {
-      backgroundColor: Colors.zonoPrimaryDark,
+      backgroundColor: '#2D2F39',
       height: '8vh',
       display : 'flex',
       justifyContent: 'center',
@@ -96,39 +144,14 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       marginBottom: 0,
       justifyContent: 'space-between',
-      width: '56%',
+      width: '36%',
       paddingLeft: 39,
       listStyleType: 'none',
     },
+    text: {
+      
+    }
 
 });
 
 export default Header
-        //  <FlatList
-        //     data={tabList}
-        //     keyExtractor={(item) => item.id}
-        //     horizontal={true}
-        //     renderItem={({ item }) => {
-        //       const color = item.selectedTab? '#e85b49' : '#909195'
-        //       const textDecoration = item.selectedTab? 'underline #e85b49 3px' : 'none'
-        //       return (
-        //         <Pressable
-        //           style={{
-        //           color: color,
-        //           textDecoration: textDecoration,
-        //           cursor: 'pointer',
-        //         }}
-        //         onPress={() => setTabList(tabList.map((each) => {
-        //           if (item.id === each.id) {
-        //             return { ...item, selectedTab: true}
-        //           } else {
-        //             return {...item, selectedTab: false}
-        //           }
-        //         }))}
-        //       >
-        //         <Text>{item.selectedTab}</Text>
-        //       </Pressable>
-              
-        //     );
-        //   }}
-        // />

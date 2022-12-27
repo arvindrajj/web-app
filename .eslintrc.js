@@ -5,13 +5,7 @@ module.exports = {
   parserOptions: {project: ['./tsconfig.json']},
   plugins: ['@typescript-eslint'],
   rules: {
-    '@typescript-eslint/strict-boolean-expressions': [
-      2,
-      {
-        allowString: false,
-        allowNumber: false,
-      },
-    ],
+    "@typescript-eslint/strict-boolean-expressions": "warn",
   },
   ignorePatterns: ['src/**/*.test.ts', 'src/frontend/generated/*'],
 };

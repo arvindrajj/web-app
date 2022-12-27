@@ -2,36 +2,11 @@ import {Text, View, StyleSheet} from 'react-native'
 import React from 'react'
 import {Colors} from '../../colors'
 import ReactTable from './ReactTable'
+import {MoneyTemp, Customer} from '../types'
 
-interface MoneyTemp {
-    id: string,
-    moneyType: string,
-    total: number | string,
-  } 
-  
-export interface CoustomerTemp {
-    customerId: number,
-    date:   string,
-    teamMember: string,
-    amountRecived: number | string,
-    recivedCash: number | string,
-    receivedCheque: number | string,
-    noOfPayments: string,
-    cashierName: string,
-  }
 
-export interface TeamHeader {
-    Header: string,
-    accessor: string,
-}  
   
-  interface Customer {
-      teamHeaders: TeamHeader[],
-      teamDetails: CoustomerTemp[],
-  
-  }
-  
-  function createItems<Type>(items:Type[]):Type[]{return [...items]}
+function createItems<Type>(items:Type[]):Type[]{return [...items]}
   
   
   const zonoMoney = createItems<MoneyTemp>([
@@ -192,9 +167,10 @@ export interface TeamHeader {
   const columns = customers.teamHeaders
   const data = customers.teamDetails
 
-const Receiving = () => {
+const Receiving = ({navigation}) => {
     return (
-        <View style={styles.container}>
+        <>
+         <View style={styles.container}>
             <View style={styles.flatList}>
                 {zonoMoney.map(item => (
                     <View 
@@ -215,45 +191,8 @@ const Receiving = () => {
                 ))}
             </View>
             <ReactTable data={data} columns={columns} />
-            {/* <DataTable 
-                style={styles.dataTable}>
-                <DataTable.Header>
-                  {customers.teamHeaders.map(each => (
-                    <DataTable.Title style={{width: "15.65%"}}>
-                     <Text style={styles.text3}>{each}</Text>
-                     <hr style={{
-                        maxHeight: 0.3,
-                        width: '100%',
-                        backgroundColor: '#909195',
-                      }}  
-                    />
-                    </DataTable.Title>
-                  ))}
-                </DataTable.Header>
-                {customers.teamDetails.map(item => {
-                  const backgroundColor = item.customerId % 2 === 0 ? Colors.zonoMidnightGrety : 'none'  
-                  return (
-                    <DataTable.Row style={{
-                        textAlign: 'center',
-                        fontSize: 13,
-                        height: 36,
-                        backgroundColor: backgroundColor,
-                        padding: 10,
-                       }}
-                       key={item.customerId}
-                       >
-                          <DataTable.Cell>{item.date}<sup style={{fontSize: '11px'}}>th</sup>{item.fullDate}</DataTable.Cell>
-                          <DataTable.Cell>{item.teamMember}</DataTable.Cell>
-                          <DataTable.Cell>{item.amountRecived}</DataTable.Cell>
-                          <DataTable.Cell>{item.recivedCash}</DataTable.Cell>
-                          <DataTable.Cell>{item.receivedCheque}</DataTable.Cell>
-                          <DataTable.Cell>{item.noOfPayments}</DataTable.Cell>
-                          <DataTable.Cell>{item.cashierName}</DataTable.Cell>
-                    </DataTable.Row> 
-                  )  
-                })}
-            </DataTable> */}
-        </View>
+        </View>   
+        </>
     )
 }
 

@@ -12,8 +12,7 @@
  */
 
 import React from 'react';
-import Header from '../screens/PrincipleHeader'
-import Receiving from '../screens/Receiving'
+import Routes from '../navigation/routes/routes';
 // import { Colors } from '../colors'
 
 import { View, Text, StyleSheet } from 'react-native';
@@ -21,8 +20,7 @@ import { View, Text, StyleSheet } from 'react-native';
 const App = () => {
   return (
     <View style={styles.title}>
-      <Header />
-      <Receiving />
+      <Routes />
     </View>
   );
 };
