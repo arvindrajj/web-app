@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     width: '74vw',
     padding: 10,
     borderSpacing: 0,
-    backgroundColor: '#21222B',
+    backgroundColor: 'transperent',
  },
  checkbox: {
     width: 15,

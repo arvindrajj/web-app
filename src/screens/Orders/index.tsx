@@ -170,11 +170,11 @@ const Orders = () => {
             <OrderTable data={data} columns={columns} setData={setData} />
             <TouchableOpacity>
               <LinearGradient
-              start={{x:0, y:0.25}}
-              end={{x:0.5, y: 1}}
-              locations={[0.2, 10]}
-              colors={['#50C9FF','#007AB2']}
-              style={styles.linearGradient}
+                start={{x:0, y:0.25}}
+                end={{x:0.5, y: 1}}
+                locations={[0.2, 10]}
+                colors={['#50C9FF','#007AB2']}
+                style={styles.linearGradient}
               >
                 <Text style={styles.buttonText}>Add To Order</Text>
               </LinearGradient>
@@ -230,6 +230,7 @@ const styles = StyleSheet.create({
   modal: {
     width: '81%',
     height: '80%',
+    minHeight: 625,
     margin: 'auto',
     borderRadius: 22,
     // paddingHorizontal: 60,
@@ -280,19 +281,20 @@ const styles = StyleSheet.create({
     // cursor: 'pointer',
   },
   buttonText: {
-    fontSize: 14,
+    fontSize: 16,
     color: "#ffffff",
     fontWeight: '500',
+    fontFamily: 'Fira Sans',
   },
   linearGradient: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    width: 200,
+    width: 296,
+    height: 56,
     margin: 'auto',
     borderRadius: 4,
-    height: 38,
   },
   blur: {
     position: 'absolute',
