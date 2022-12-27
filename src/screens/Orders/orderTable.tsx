@@ -177,6 +177,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderSpacing: 0,
     backgroundColor: 'transperent',
+    minWidth: 900,
  },
  checkbox: {
     width: 15,

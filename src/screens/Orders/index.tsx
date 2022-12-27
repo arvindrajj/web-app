@@ -158,7 +158,6 @@ const Orders = () => {
                   <Image
                       style={{
                         alignSelf: 'center',
-                        paddingBottom: 2,
                         height: 20,
                         width: 20,
                       }}
@@ -234,6 +233,7 @@ const styles = StyleSheet.create({
     width: '81%',
     height: '80%',
     minHeight: 625,
+    minWidth: 900,
     margin: 'auto',
     borderRadius: 22,
     // paddingHorizontal: 60,
