@@ -69,7 +69,7 @@ const OrderTable = (props: Props) => {
         </tr>
       ))}
     </thead>
-    <tbody 
+    <tbody
     {...getTableBodyProps()} 
     style={{
       justifyContent: 'center',
@@ -103,7 +103,7 @@ const OrderTable = (props: Props) => {
                   
                 >
                   <View  style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                  {cell.column.Header === 'Quantity' && 
+                  {cell.column.Header === 'Quantity' &&
                    <TextInput
                       style={{
                         borderWidth: 1,
@@ -121,7 +121,9 @@ const OrderTable = (props: Props) => {
                       keyboardType="numeric"
                       placeholder="0"
                       value={row.original.quantity}
-                      onChangeText={e => setSearchInput(e, row.original.orderId)}
+                      onChangeText={e => 
+                        setSearchInput(e.replace(/[^0-9]/gi, ""), row.original.orderId)
+                      }
                     />}
                    {cell.column.Header === 'SKU' && <img src={checkbox} onClick={() => updateData(row.original.orderId)} style={{paddingRight: 8}} />  }
                   <View style={{

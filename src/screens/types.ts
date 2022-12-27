@@ -43,7 +43,7 @@ export interface OrderTemp {
   sku: any,
   title: string,
   price: string,
-  quantity: string,
+  quantity: number,
   quantityType: string,
   uomConversion: number,
   value: string,
