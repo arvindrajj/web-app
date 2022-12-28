@@ -1,10 +1,11 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { useTable } from 'react-table';
 import { Table } from 'react-bootstrap';
 import {OrderTemp} from '../types'
-import { StyleSheet, TextInput, Image, View} from 'react-native'
+import { StyleSheet, TextInput, Image, View, Pressable} from 'react-native'
 
 import { SVGS, PNGS } from '../../Assets'; 
+import RowView from './rowView';
 
 interface Props {
   columns: any[],
@@ -12,10 +13,11 @@ interface Props {
   setData: any,
   pading?: number,
 }
-
+type RowList = number[]
 
 const OrderTable = (props: Props) => {
   const { columns, data, setData } = props;
+  const [rowView, setRowView] = useState<RowList>([])
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
       columns,
@@ -30,6 +32,16 @@ const OrderTable = (props: Props) => {
         return each
       }
     }))
+ }
+ type Id = number
+
+ const setRowViewItems = async (i: any) => {
+    if(rowView.includes(i)){
+      const index = rowView.indexOf(i)
+      setRowView(rowView.filter((each, index)=> each !== i && each))
+    } else {
+      setRowView([...rowView, i])
+    }
  }
 
  const setSearchInput = (e: string, id: string) => {
@@ -76,21 +88,26 @@ const OrderTable = (props: Props) => {
       alignItems: 'center',
       overflowY: 'scroll',
       overflowX: 'hidden',
+      maxHeight: 395,
     }}
     >
       {rows.map((row, i) => {
         prepareRow(row)
+          console.log(rowView)
           const checkbox = row.original.isChecked? SVGS.CheckBoxGreenSVG : SVGS.CheckBox
           // console.log(row.original)
           const borderColor = row.original.isChecked? '#64E6BA': '#9295A580'
+          
           return (
-          <tr {...row.getRowProps()} 
+         <>   
+          <tr {...row.getRowProps()}
+            style={{flexWrap: 'wrap'}}
           >
             {row.cells.map(cell => {
               const color = cell.column.Header === 'Quantity' ? '#9295A5' : '#ffffff'
-              const minWidth = cell.column.Header === 'Value(₹)' ? 120 : undefined 
+              const minWidth = cell.column.Header === 'Value(₹)' ? 120 : undefined
               return (
-                   <td
+                <td
                   {...cell.getCellProps()}
                   style={{
                     cursor: 'pointer',
@@ -99,8 +116,7 @@ const OrderTable = (props: Props) => {
                     font: 'normal normal normal',
                     color,
                     // width: 200,
-                  }}
-                  
+                  }}  
                 >
                   <View  style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                   {cell.column.Header === 'Quantity' &&
@@ -127,7 +143,7 @@ const OrderTable = (props: Props) => {
                     />}
                    {cell.column.Header === 'SKU' && <img src={checkbox} onClick={() => updateData(row.original.orderId)} style={{paddingRight: 8}} />  }
                   <View style={{
-                    display: 'flex', 
+                    display: 'flex',
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     minWidth,
@@ -146,23 +162,27 @@ const OrderTable = (props: Props) => {
                     />
                     }
                     {cell.column.Header === 'Value(₹)' &&
-                    <Image
-                        style={{
-                          marginRight: 5,
-                          height: 20,
-                          width: 20,
+                    <Pressable onPress={() => setRowViewItems(i)}>
+                      <Image
+                          style={{
+                            marginRight: 5,
+                            height: 20,
+                            width: 20,
+                          }}
+                          source={{
+                            uri: PNGS.Download,
                         }}
-                        source={{
-                          uri: PNGS.Download,
-                      }}
-                    />
-                    }
+                      />
+                    </Pressable>
+                      }
                   </View>
                   </View>
                 </td>  
               )
             })}
           </tr>
+          {rowView.includes(i) && <RowView />}
+          </>
         )
       })}
     </tbody>

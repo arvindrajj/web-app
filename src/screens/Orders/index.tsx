@@ -110,8 +110,88 @@ const Orders = () => {
               isChecked: false,
               icon: SVGS.CopyLink,
           },
+          { 
+            orderId: '8',
+            sku: "834AE36442",
+            title: 'GoodKnight Active +Coil(Low Smoke)',
+            price: '175.00',
+            quantity: 0,
+            quantityType: 'DZ',
+            uomConversion: 12,
+            value: '0',
+            isChecked: false,
+            icon: SVGS.Percentage,
+        },
+        {
+            orderId: '9',
+            sku: "834AE36443",
+            title: 'GoodKnight Cool Gel',
+            price: '175.00',
+            quantity: 0,
+            quantityType: 'CSE',
+            uomConversion: 34,
+            value: '₹58,656.00',
+            isChecked: false,
+        },
+        {
+            orderId: '10',
+            sku: "834AE36444",
+            title: 'Goodknight Fabric Roll -on',
+            price: '175.00',
+            quantity: 0,
+            quantityType: 'DZ',
+            uomConversion: 56,
+            value: '0',
+            isChecked: false,
+            icon: SVGS.CopyLink,
+        },
+        {
+            orderId: '11',
+            sku: "834AE36445",
+            title: 'GoodKnight Fast Card',
+            price: '175.00',
+            quantity: 0,
+            quantityType: 'DZ',
+            uomConversion: 12,
+            value: '0',
+            isChecked: false,
+            icon: SVGS.Percentage,
+        },
+        {
+            orderId: '12',
+            sku: "834AE36446",
+            title: 'GoodKnight Gold Flash',
+            price: '175.00',
+            quantity: 0,
+            quantityType: 'CSE',
+            uomConversion: 34,
+            value: '0',
+            isChecked: false,
+        },
+        {
+            orderId: '13',
+            sku: "834AE36447",
+            title: 'GoodKnight Green Shakti Coil',
+            price: '175.00',
+            quantity: 0,
+            quantityType: 'DZ',
+            uomConversion: 15,
+            value: '0',
+            isChecked: false,
+        },
+        {
+            orderId: '14',
+            sku: "834AE36447",
+            title: 'GoodKnight Jumbo /Mini-jumbo Coil',
+            price: '175.00',
+            quantity: 0,
+            quantityType: 'CSE',
+            uomConversion: 12,
+            value: '0',
+            isChecked: false,
+            icon: SVGS.CopyLink,
+        },
       ],
-  
   }
   const [data, setData] = useState(customers.orderDetails)
   const columns = customers.orderHeaders
@@ -151,7 +231,7 @@ const Orders = () => {
                 value={searchinput}
                 onChangeText={e => setSearchInput(e)}
               />
-              {searchinput === '' ? (
+              {searchinput.length < 3 ? (
                 <BsSearch color="#a1a3b4" height={30} width={30} style={styles.search} />
               ) : (
                 <TouchableOpacity style={styles.iconView} onPress={() => setSearchInput('')}>
